@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: mlproject
+Version: 0.1.0
+Author: Shiva
+Author-email: vnshiva2004@gmail.com
+Requires-Dist: pandas
+Requires-Dist: numpy
+Requires-Dist: seaborn
