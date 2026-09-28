@@ -7,8 +7,10 @@ from src.logger import logging
 import pandas as pd
 from dataclasses import dataclass
 import math
-from sklearn.model_selection import train_test_split
-
+# from sklearn.model_selection import train_test_split
+from src.components.model_trainer import ModelTrainer
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
 @dataclass
 class DataIngestionConfig:
     train_data_path: str = os.path.join('artifacts', 'train.csv')
@@ -46,4 +48,10 @@ if __name__=="__main__":
     parser.add_argument("--data-path", dest="data_path", required=True, help="Path to the source data file")
     args = parser.parse_args()
     data_inj_obj = DataIngestion(source_data_path=args.data_path)
-    data_inj_obj.initiate_data_ingestion()
+    train_data_path,test_data_path = data_inj_obj.initiate_data_ingestion()
+    print(type(train_data_path))
+    data_transformation = DataTransformation()
+    train_array,test_array,_=data_transformation.initiate_data_transformation(train_path=train_data_path, test_path=test_data_path)
+
+    model_trainer=ModelTrainer()
+    print(model_trainer.initiate_model_trainer(train_array=train_array,test_array=test_array))  
